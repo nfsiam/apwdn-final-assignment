@@ -38,6 +38,7 @@ namespace BasicBlog.Controllers
             comment.CommentTime = DateTime.Now;
             comment.UserId = ((User)Request.Properties["user"]).UserId;
             this.commentRepository.Insert(comment);
+            comment.User = (User)Request.Properties["user"];
             //string uri = Url.Link("GetCommentById", new { id = comment.PostId, cid = comment.CommentId });
             return Created("posts/"+comment.PostId+"comments/"+comment.CommentId, comment);
         }
@@ -45,10 +46,10 @@ namespace BasicBlog.Controllers
         [Route("{cid}")]
         public IHttpActionResult Put([FromUri] int cid, [FromBody] Comment comment)
         {
-            comment.CommentId = cid;
-            comment.UserId = ((User)Request.Properties["user"]).UserId;
-            commentRepository.Update(comment);
-            return Ok(comment);
+            Comment oldComment = commentRepository.Get(cid);
+            oldComment.CommentBody = comment.CommentBody;
+            commentRepository.Update(oldComment);
+            return Ok(oldComment);
         }
 
         [Route("{cid}")]

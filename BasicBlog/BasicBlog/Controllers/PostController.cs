@@ -59,10 +59,5 @@ namespace BasicBlog.Controllers
             postRepository.Delete(id);
             return StatusCode(HttpStatusCode.NoContent);
         }
-        [Route("string")]
-        public IHttpActionResult GetString()
-        {
-            return Ok((User)Request.Properties["user"]);
-        }
     }
 }
