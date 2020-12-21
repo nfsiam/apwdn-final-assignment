@@ -26,6 +26,16 @@ namespace BasicBlog.Models
                 .HasForeignKey(k => k.PostId)
                 .WillCascadeOnDelete(true)
                 ;
+            modelBuilder.Entity<Comment>().HasKey<int>(k => k.CommentId)
+                .HasOptional(k => k.User)
+                .WithMany(k => k.Comments)
+                .HasForeignKey(k => k.UserId)
+                .WillCascadeOnDelete(true)
+                ;
+            modelBuilder.Entity<Post>().Property(p => p.PostTime)
+                .IsOptional();
+            modelBuilder.Entity<Comment>().Property(c => c.CommentTime)
+                .IsOptional();
         }
     }
 }

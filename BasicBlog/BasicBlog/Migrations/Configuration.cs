@@ -20,10 +20,10 @@
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method
             //  to avoid creating duplicate seed data.
             context.Users.AddOrUpdate(x => x.UserId,
-                new User() { UserId = 1, Email = "jane@mail.com", Username="jane", Name = "Jane Austen", Password = "1234" },
-                new User() { UserId = 2, Email = "charles@mail.com", Username = "charles", Name = "Charles Dickens" , Password = "1234"},
-                new User() { UserId = 3, Email = "miguel@mail.com", Username = "miguel", Name = "Miguel de Cervantes", Password = "1234" },
-                new User() { UserId = 4, Email = "siam@mail.com", Username = "siam", Name = "Nafiz Fuad Siam", Password = "1234" }
+                new User() { UserId = 1,  Username="jane", Name = "Jane Austen", Password = "1234" },
+                new User() { UserId = 2,  Username = "charles", Name = "Charles Dickens" , Password = "1234"},
+                new User() { UserId = 3,  Username = "miguel", Name = "Miguel de Cervantes", Password = "1234" },
+                new User() { UserId = 4,  Username = "siam", Name = "Nafiz Fuad Siam", Password = "1234" }
             );
             context.Posts.AddOrUpdate(x => x.PostId,
                 new Post()

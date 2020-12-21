@@ -12,13 +12,12 @@ namespace BasicBlog.Models
     {
         [Key]
         public int PostId { get; set; }
-        [Required]
         public DateTime PostTime { get; set; }
 
-        [Column(TypeName = "varchar"), Required,StringLength(1000)]
+        [Column(TypeName = "varchar"), Required,StringLength(200),MinLength(4)]
         public string PostTitle { get; set; }
 
-        [Column(TypeName ="text"),Required]
+        [Column(TypeName ="text"),Required,MinLength(10)]
         public string PostBody { get; set; }
         [JsonIgnore]
         public virtual ICollection<Comment> Comments { get; set; }

@@ -15,7 +15,6 @@ namespace BasicBlog.Controllers
     {
         private PostRepository postRepository = new PostRepository();
         [Route("")]
-        [Route("~/")]
         public IHttpActionResult Get()
         {
             return Ok(this.postRepository.GetAll());
@@ -37,20 +36,39 @@ namespace BasicBlog.Controllers
         [Route("")]
         public IHttpActionResult Post(Post post)
         {
-            post.PostTime = DateTime.Now;
-            post.UserId = ((User)Request.Properties["user"]).UserId;
-            this.postRepository.Insert(post);
-            string uri = Url.Link("GetPostById", new { id = post.PostId });
-            return Created(uri, post);
+            if(ModelState.IsValid)
+            {
+                this.postRepository.Insert(post, Request.Properties["user"] as User);
+                string uri = Url.Link("GetPostById", new { id = post.PostId });
+                return Created(uri, post);
+            }
+            else
+            {
+                return BadRequest(ModelState);
+            }
         }
 
         [Route("{id}")]
         public IHttpActionResult Put([FromUri] int id, [FromBody] Post post)
         {
             post.PostId = id;
-            post.UserId = ((User)Request.Properties["user"]).UserId;
-            postRepository.Update(post);
-            return Ok(post);
+            //post.UserId = ((User)Request.Properties["user"]).UserId;
+            //postRepository.Update(post);
+            //return Ok(post);
+            if (ModelState.IsValid)
+            {
+                Post _post = this.postRepository.Update(post, Request.Properties["user"] as User);
+                if(_post == null)
+                {
+                    return BadRequest();
+                }
+                string uri = Url.Link("GetPostById", new { id = post.PostId });
+                return Ok(_post);
+            }
+            else
+            {
+                return BadRequest(ModelState);
+            }
         }
 
         [Route("{id}")]

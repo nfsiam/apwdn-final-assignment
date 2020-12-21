@@ -113,6 +113,18 @@
     <Compile Include="Migrations\202012182142459_UsernamePasswordColAdd.designer.cs">
       <DependentUpon>202012182142459_UsernamePasswordColAdd.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202012202148128_MinLength.cs" />
+    <Compile Include="Migrations\202012202148128_MinLength.designer.cs">
+      <DependentUpon>202012202148128_MinLength.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012202223067_DateTimeUserIdOptional.cs" />
+    <Compile Include="Migrations\202012202223067_DateTimeUserIdOptional.designer.cs">
+      <DependentUpon>202012202223067_DateTimeUserIdOptional.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012210552228_DropMail.cs" />
+    <Compile Include="Migrations\202012210552228_DropMail.designer.cs">
+      <DependentUpon>202012210552228_DropMail.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BasicBlogDbContext.cs" />
     <Compile Include="Models\Comment.cs" />
@@ -143,6 +155,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202012182142459_UsernamePasswordColAdd.resx">
       <DependentUpon>202012182142459_UsernamePasswordColAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012202148128_MinLength.resx">
+      <DependentUpon>202012202148128_MinLength.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012202223067_DateTimeUserIdOptional.resx">
+      <DependentUpon>202012202223067_DateTimeUserIdOptional.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012210552228_DropMail.resx">
+      <DependentUpon>202012210552228_DropMail.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

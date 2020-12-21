@@ -11,8 +11,7 @@ namespace BasicBlog.Models
     public class User
     {
         public int UserId { get; set; }
-        [Required,EmailAddress]
-        public string Email { get; set; }
+
         [Required, Column(TypeName = "varchar"), StringLength(200)]
         public string Username { get; set; }
         [Required, Column(TypeName ="varchar"),StringLength(200)]

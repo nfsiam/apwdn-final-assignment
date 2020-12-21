@@ -35,21 +35,36 @@ namespace BasicBlog.Controllers
         [Route("")]
         public IHttpActionResult Post(Comment comment)
         {
-            comment.CommentTime = DateTime.Now;
-            comment.UserId = ((User)Request.Properties["user"]).UserId;
-            this.commentRepository.Insert(comment);
-            comment.User = (User)Request.Properties["user"];
-            //string uri = Url.Link("GetCommentById", new { id = comment.PostId, cid = comment.CommentId });
-            return Created("posts/"+comment.PostId+"comments/"+comment.CommentId, comment);
+            if (ModelState.IsValid)
+            {
+                this.commentRepository.Insert(comment, Request.Properties["user"] as User);
+                return Created("posts/" + comment.PostId + "comments/" + comment.CommentId, comment);
+            }
+            else
+            {
+                return BadRequest(ModelState);
+            }
+
         }
 
         [Route("{cid}")]
         public IHttpActionResult Put([FromUri] int cid, [FromBody] Comment comment)
         {
-            Comment oldComment = commentRepository.Get(cid);
-            oldComment.CommentBody = comment.CommentBody;
-            commentRepository.Update(oldComment);
-            return Ok(oldComment);
+            comment.CommentId = cid;
+
+            if (ModelState.IsValid)
+            {
+                Comment _comment = this.commentRepository.Update(comment, Request.Properties["user"] as User);
+                if(_comment == null)
+                {
+                    return BadRequest();
+                }
+                return Ok(_comment);
+            }
+            else
+            {
+                return BadRequest(ModelState);
+            }
         }
 
         [Route("{cid}")]

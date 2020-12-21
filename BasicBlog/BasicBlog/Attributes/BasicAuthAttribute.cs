@@ -35,7 +35,6 @@ namespace BasicBlog.Attributes
                 {
                     Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(username), null);
                     actionContext.Request.Properties.Add("user", user);
-
                 }
                 else
                 {
