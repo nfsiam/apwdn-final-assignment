@@ -6,9 +6,9 @@ using System.Linq;
 using System.Web;
 using System.Web.UI.WebControls;
 
-namespace Inventory_with_Repository_Pattern.Repositories
+namespace BasicBlog.Repositories
 {
-    public class ProductRepository:Repository<Comment>
+    public class CommentRepository:Repository<Comment>
     {
     }
 }

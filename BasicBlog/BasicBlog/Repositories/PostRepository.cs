@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace CodeFirstWIthRepostoryPattern.Repositories
+namespace BasicBlog.Repositories
 {
-    public class CategoryRepository:Repository<Post>
+    public class PostRepository:Repository<Post>
     {
     }
 }

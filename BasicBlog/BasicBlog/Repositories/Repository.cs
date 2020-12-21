@@ -13,8 +13,11 @@ namespace BasicBlog.Repositories
         protected BasicBlogDbContext context = new BasicBlogDbContext();
         public void Delete(int id)
         {
-            this.context.Set<T>().Remove(Get(id));
-            this.context.SaveChanges();
+            if(this.Get(id)!=null)
+            {
+                this.context.Set<T>().Remove(Get(id));
+                this.context.SaveChanges();
+            }
         }
 
         public T Get(int id)

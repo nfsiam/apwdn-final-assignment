@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -16,6 +17,7 @@ namespace BasicBlog.Models
         [Column(TypeName = "text"), Required]
         public string CommentBody { get; set; }
         public int? PostId { get; set; }
+        [JsonIgnore]
         public virtual Post Post {get; set;}
         public int UserId { get; set; }
         public virtual User User { get; set; }

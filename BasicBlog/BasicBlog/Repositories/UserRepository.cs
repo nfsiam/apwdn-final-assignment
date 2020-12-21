@@ -1,5 +1,4 @@
 ﻿using BasicBlog.Models;
-using CodeFirstWIthRepostoryPattern.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
