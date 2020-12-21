@@ -8,15 +8,16 @@ namespace BasicBlog.Repositories
 {
     public class UserRepository : Repository<User>
     {
-        public bool ValidateUser(string username,string password)
+        public User ValidateUser(string username,string password)
         {
-            if(this.GetAll().Where(u => u.Username == username && u.Password == password).FirstOrDefault() == null)
+            User user = this.GetAll().Where(u => u.Username == username && u.Password == password).FirstOrDefault();
+            if (user == null)
             {
-                return false;
+                return null;
             }
             else
             {
-                return true;
+                return user;
             }
         }
     }

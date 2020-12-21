@@ -36,13 +36,7 @@
                     </li>
                 </ul>
                 <div class="form-inline my-2 my-lg-0">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Login</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Register</a>
-                        </li>
+                    <ul class="navbar-nav mr-auto" id="login-out">
                     </ul>
                 </div>
             </div>
@@ -50,7 +44,9 @@
     </nav>
 
     <div class="container">
-        <div class="row" id="posts">
+        <div class="row" id="login-form">
+        </div>
+        <div class="row" id="posts-section">
         </div>
         <div class="row" id="create-post-section">
         </div>
@@ -76,6 +72,7 @@
             console.warn("hello");
         });
     </script>
+    <script src="/js/cookie.js"></script>
     <script src="/js/index.js"></script>
 
 </body>

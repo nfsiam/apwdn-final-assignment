@@ -4,6 +4,13 @@ let postUpdateOp = false;
 
 
 $(window).on('hashchange', function (e) {
+    $('#post').html('');
+    $('#posts-section').html('');
+    $('#edit-post-section').html('');
+    $('#create-post-section').html('');
+    $('#create-comment-section').html('');
+    $('#comments').html('');
+    $('#login-form').html('');
     route();
 });
 
@@ -12,27 +19,59 @@ $(document).ready(function () {
 });
 
 
+
 function route() {
     const loc = window.location.hash;
     console.log(loc);
-    if (loc == '#create-post') {
-        createPost();
-    } else if (loc == '#posts') {
-        loadPosts();
-    } else if (loc.startsWith('#posts/')) {
-        const parts = loc.slice(1).split('/');
-        goToPost(parts[1]);
+    if (getCookie() == "") {
+        const loginstr =
+            `
+        <li class="nav-item" id="login-out">
+            <a class="nav-link" href="#login">Login</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#register">Register</a>
+        </li>
+        `;
+        $('#login-out').html(loginstr);
+
+        if (loc == "#login") {
+            const str =
+                `
+                <input type="text" id="username-input">
+                <input type="password" id="password-input">
+                <button id="loginBtn" onclick="loginSubmit()">Login</button>
+            `;
+            $('#login-form').html(str);
+        } else if (loc == "#registration") {
+
+        }
+        else {
+            window.location.hash = "login";
+        }
+    }
+    else if (getCookie() != "") {
+        $('#login-out').html(`<li class="nav-item" id="login-out"><a class="nav-link" href="#logout">Logout</a></li>`);
+        //window.location.hash = "posts";
+        if (loc == '#create-post') {
+            createPost();
+        } else if (loc == '#posts') {
+            loadPosts();
+        } else if (loc.startsWith('#posts/')) {
+            const parts = loc.slice(1).split('/');
+            goToPost(parts[1]);
+        } else if (loc == "#logout") {
+            setCookie("", 0);
+            window.location.hash = "login";
+        } else {
+            window.location.hash = "posts";
+        }
     }
 }
 
 function createPost() {
     //e.preventDefault();
-    $('#post').html('');
-    $('#posts').html('');
-    $('#edit-post-section').html('');
-    $('#comments').html('');
     window.location.hash = "create-post";
-
     const str =
         `
     <div class="col-sm-12">
@@ -60,17 +99,17 @@ function createPost() {
 }
 
 function submitPost() {
+    const token = "Basic " + getCookie();
     $.ajax({
         url: "http://localhost:5571/posts/",
         method: "POST",
         headers: {
-            Authorization: "Basic " + btoa("siam:1234")
+            Authorization: token,
         },
         header: "Content-Type:application/json",
         data: {
             postTitle: $('#title').val(),
             postBody: $('#body').val(),
-            userId: 4
         },
         complete: function (xmlhttp, status) {
             if (xmlhttp.status == 201) {
@@ -86,15 +125,15 @@ function submitPost() {
     });
 }
 
-$('#home').click(function (e) {
-    e.preventDefault();
-    window.location.hash = "posts";
-})
+// $('#home').click(function (e) {
+//     e.preventDefault();
+//     window.location.hash = "posts";
+// })
 
 // $('#create-post').click(function (e) {
 //     e.preventDefault();
 //     $('#post').html('');
-//     $('#posts').html('');
+//     $('#posts-section').html('');
 //     $('#edit-post-section').html('');
 //     $('#comments').html('');
 //     window.location.hash = "create-post";
@@ -126,17 +165,11 @@ $('#home').click(function (e) {
 // });
 
 function loadPosts() {
-    $('#post').html('');
-    $('#edit-post-section').html('');
-    $('#create-post-section').html('');
-    $('#create-comment-section').html('');
-    $('#comments').html('');
-    $('#posts').html('');
     $.ajax({
         url: "http://localhost:5571/posts",
         method: "GET",
         headers: {
-            Authorization: "Basic " + btoa("siam:1234")
+            Authorization: "Basic " + getCookie().toString()
         },
         complete: function (xmlhttp, status) {
             if (xmlhttp.status == 200) {
@@ -157,7 +190,7 @@ function loadPosts() {
     });
 }
 
-loadPosts();
+//loadPosts();
 
 
 function appendPost(post) {
@@ -206,7 +239,7 @@ function appendPost(post) {
         </div>
         </div>
     `;
-    $('#posts').append(str);
+    $('#posts-section').append(str);
 }
 
 
@@ -217,7 +250,7 @@ function goToPost(postId) {
         url: "http://localhost:5571/posts/" + postId,
         method: "GET",
         headers: {
-            Authorization: "Basic " + btoa("siam:1234")
+            Authorization: "Basic " + getCookie()
         },
         complete: function (xmlhttp, status) {
             if (xmlhttp.status == 200) {
@@ -235,7 +268,7 @@ function goToPost(postId) {
 
 function showPost(post) {
     _post = post;
-    $('#posts').html('');
+    $('#posts-section').html('');
     $('#create-post-section').html('');
     $('#comments').html('');
     $('#post').css("display", "block");
@@ -317,7 +350,7 @@ function loadComments(postId) {
         url: "http://localhost:5571/posts/" + postId + "/comments",
         method: "GET",
         headers: {
-            Authorization: "Basic " + btoa("siam:1234")
+            Authorization: "Basic " + getCookie()
         },
         complete: function (xmlhttp, status) {
             if (xmlhttp.status == 200) {
@@ -405,14 +438,13 @@ function submitUpdatedPost() {
         url: "http://localhost:5571/posts/" + _post.postId,
         method: "PUT",
         headers: {
-            Authorization: "Basic " + btoa("siam:1234")
+            Authorization: "Basic " + getCookie()
         },
         header: "Content-Type:application/json",
         data: {
             postTitle: $('#title').val(),
             postBody: $('#body').val(),
             postTime: _post.postTime,
-            userId: _post.userId
         },
         complete: function (xmlhttp, status) {
             if (xmlhttp.status == 200) {
@@ -444,7 +476,7 @@ function deletePost() {
             url: "http://localhost:5571/posts/" + _post.postId,
             method: "DELETE",
             headers: {
-                Authorization: "Basic " + btoa("siam:1234")
+                Authorization: "Basic " + getCookie()
             },
             header: "Content-Type:application/json",
             complete: function (xmlhttp, status) {
@@ -463,17 +495,18 @@ function deletePost() {
 
 function submitComment() {
     console.log(999);
+    const token = "Basic " + getCookie();
+    console.log(token);
     $.ajax({
         url: "http://localhost:5571/posts/" + _post.postId + "/comments",
         method: "POST",
         headers: {
-            Authorization: "Basic " + btoa("siam:1234")
+            Authorization: token,
         },
         header: "Content-Type:application/json",
         data: {
             commentBody: $('#comment-body').val(),
             postId: _post.postId,
-            userId: 4
         },
         complete: function (xmlhttp, status) {
             console.log(status);
@@ -488,4 +521,13 @@ function submitComment() {
             }
         }
     });
+}
+
+function loginSubmit() {
+    const username = $('#username-input').val().trim();
+    const password = $('#password-input').val().trim();
+    console.log(username + ":" + password);
+    const base64 = btoa(username + ":" + password);
+    setCookie(base64, 1);
+    window.location.hash = "posts";
 }

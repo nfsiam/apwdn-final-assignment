@@ -38,6 +38,7 @@ namespace BasicBlog.Controllers
         public IHttpActionResult Post(Post post)
         {
             post.PostTime = DateTime.Now;
+            post.UserId = ((User)Request.Properties["user"]).UserId;
             this.postRepository.Insert(post);
             string uri = Url.Link("GetPostById", new { id = post.PostId });
             return Created(uri, post);
@@ -47,6 +48,7 @@ namespace BasicBlog.Controllers
         public IHttpActionResult Put([FromUri] int id, [FromBody] Post post)
         {
             post.PostId = id;
+            post.UserId = ((User)Request.Properties["user"]).UserId;
             postRepository.Update(post);
             return Ok(post);
         }
@@ -56,6 +58,11 @@ namespace BasicBlog.Controllers
         {
             postRepository.Delete(id);
             return StatusCode(HttpStatusCode.NoContent);
+        }
+        [Route("string")]
+        public IHttpActionResult GetString()
+        {
+            return Ok((User)Request.Properties["user"]);
         }
     }
 }

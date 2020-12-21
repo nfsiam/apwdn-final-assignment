@@ -1,4 +1,5 @@
-﻿using BasicBlog.Repositories;
+﻿using BasicBlog.Models;
+using BasicBlog.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,10 +30,12 @@ namespace BasicBlog.Attributes
                 string[] splittedText = decodedString.Split(new Char[] { ':' });
                 string username = splittedText[0];
                 string password = splittedText[1];
-
-                if (new UserRepository().ValidateUser(username,password))
+                User user = new UserRepository().ValidateUser(username, password);
+                if (user != null)
                 {
                     Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(username), null);
+                    actionContext.Request.Properties.Add("user", user);
+
                 }
                 else
                 {
