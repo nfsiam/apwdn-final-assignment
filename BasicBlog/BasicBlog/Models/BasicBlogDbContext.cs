@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BasicBlog.Migrations;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace BasicBlog.Models
     {
         public BasicBlogDbContext():base("BasicBlogDb")
         {
-            
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<BasicBlogDbContext, Configuration>());
         }
         public DbSet<User> Users { get; set; }
         public DbSet<Post> Posts { get; set; }
