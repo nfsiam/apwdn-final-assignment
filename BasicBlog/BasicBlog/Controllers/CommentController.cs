@@ -35,9 +35,10 @@ namespace BasicBlog.Controllers
         [Route("")]
         public IHttpActionResult Post(Comment comment)
         {
+            comment.CommentTime = DateTime.Now;
             this.commentRepository.Insert(comment);
             //string uri = Url.Link("GetCommentById", new { id = comment.PostId, cid = comment.CommentId });
-            return Created("posts/"+comment.PostId+"comments"+comment.CommentId, comment);
+            return Created("posts/"+comment.PostId+"comments/"+comment.CommentId, comment);
         }
 
         [Route("{cid}")]

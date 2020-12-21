@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json.Serialization;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace BasicBlog
 {
@@ -19,13 +21,16 @@ namespace BasicBlog
                 routeTemplate: "{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
-            
+
             //config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling
             //        = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             //config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling
             //     = Newtonsoft.Json.ReferenceLoopHandling.Serialize;
             //config.Formatters.JsonFormatter.SerializerSettings.PreserveReferencesHandling
             //     = Newtonsoft.Json.PreserveReferencesHandling.Objects;
+            EnableCorsAttribute enableCorsAttribute = new EnableCorsAttribute("*", "*", "*");
+            config.EnableCors(enableCorsAttribute);
+            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
         }
     }
 }

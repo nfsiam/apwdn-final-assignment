@@ -37,6 +37,7 @@ namespace BasicBlog.Controllers
         [Route("")]
         public IHttpActionResult Post(Post post)
         {
+            post.PostTime = DateTime.Now;
             this.postRepository.Insert(post);
             string uri = Url.Link("GetPostById", new { id = post.PostId });
             return Created(uri, post);
