@@ -1,4 +1,5 @@
-﻿using BasicBlog.Models;
+﻿using BasicBlog.Attributes;
+using BasicBlog.Models;
 using BasicBlog.Repositories;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Web.Http;
 
 namespace BasicBlog.Controllers
 {
-    [RoutePrefix("{posts}/{id}/{comments}")]
+    [RoutePrefix("{posts}/{id}/{comments}"),BasicAuth]
     public class CommentController : ApiController
     {
         private CommentRepository commentRepository = new CommentRepository();

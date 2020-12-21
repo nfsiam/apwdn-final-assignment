@@ -98,6 +98,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Attributes\BasicAuthAttribute.cs" />
     <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Controllers\PostController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -107,6 +108,10 @@
     <Compile Include="Migrations\202012181250121_Initial.cs" />
     <Compile Include="Migrations\202012181250121_Initial.designer.cs">
       <DependentUpon>202012181250121_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012182142459_UsernamePasswordColAdd.cs" />
+    <Compile Include="Migrations\202012182142459_UsernamePasswordColAdd.designer.cs">
+      <DependentUpon>202012182142459_UsernamePasswordColAdd.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BasicBlogDbContext.cs" />
@@ -135,6 +140,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202012181250121_Initial.resx">
       <DependentUpon>202012181250121_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012182142459_UsernamePasswordColAdd.resx">
+      <DependentUpon>202012182142459_UsernamePasswordColAdd.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

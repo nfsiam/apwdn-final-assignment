@@ -1,4 +1,5 @@
-﻿using BasicBlog.Models;
+﻿using BasicBlog.Attributes;
+using BasicBlog.Models;
 using BasicBlog.Repositories;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Web.Http;
 
 namespace BasicBlog.Controllers
 {
-    [RoutePrefix("posts")]
+    [RoutePrefix("posts"),BasicAuth]
     public class PostController : ApiController
     {
         private PostRepository postRepository = new PostRepository();
